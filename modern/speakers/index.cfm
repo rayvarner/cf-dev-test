@@ -9,7 +9,7 @@
 	structAppend( rc, url );
 
 	// TODO - get the speaker bean
-
+	rc.speakerObj = new models.beans.SpeakerBean();
 
 	// ensure the isActive variable is set in rc
 	if( !structKeyExists( rc, 'isActive') ) {
@@ -34,7 +34,7 @@
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item" aria-current="page"><a href="/modern/index.cfm">Back to Modern Dashboard</a></li>
 						<!--- TODO - build link to the edit screen using the getUidHash() function in speakerObj for the parameter name and set the value to the encrypted uid of the speakerObj --->
-						<li class="breadcrumb-item" aria-current="page"><a href="/modern/speakers/edit.cfm?">Create New Speaker</a></li>
+						<li class="breadcrumb-item" aria-current="page"><a href="/modern/speakers/edit.cfm?#rc.speakerObj.getUidHash( 'url' )#=#rc.speakerObj.getEncUid( 'url' )#">Create New Speaker</a></li>
 					</ol>
 				</nav>
 			</div>
@@ -100,7 +100,7 @@ $(document).ready(function() {
 		'serverSide': true,
 		'responsive': true,
 		'ajax': {
-			'url': '', //TODO - make call to datatable in _handler.cfm
+			'url': '<cfoutput>/modern/speakers/_handler.cfm?method=datatable&isActive=#rc.isActive#</cfoutput>', //TODO - make call to datatable in _handler.cfm
 			'type': 'POST'
 		},
 		"columns": [
@@ -124,7 +124,7 @@ $(document).ready(function() {
 		var id = $('#speakerModal').data('id');
 		$('#speakerModal').modal('hide');
 		// TODO - build a link to the deactivate method in _handler.cfm
-		window.location.href = '' + id;
+		window.location.href = '<cfoutput>_handler.cfm?method=deactivate&#rc.speakerObj.getUidHash( 'url' )#=</cfoutput>' + id;
 	});
 
 	$("body").tooltip({

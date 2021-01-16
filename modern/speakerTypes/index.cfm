@@ -107,7 +107,7 @@ $(document).ready(function() {
 	$('#btnConfirm').click(function () {
 		var id = $('#speakerTypeModal').data('id');
 		$('#speakerTypeModal').modal('hide');
-		window.location.href = '<cfoutput>/speakerTypes/_handler/?method=deactivate&#rc.speakerTypeObj.getUidHash( 'url' )#=</cfoutput>' + id;
+		window.location.href = '<cfoutput>_handler.cfm?method=deactivate&#rc.speakerTypeObj.getUidHash( 'url' )#=</cfoutput>' + id;
 	});
 
 	$("body").tooltip({

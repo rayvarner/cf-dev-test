@@ -1,6 +1,6 @@
 <cfscript>
 	// TODO - load up speaker recs to be displayed order by lastName, firstName
-
+	recs = entityLoad( "Speaker", {}, "lastName asc, firstName asc" );
 </cfscript>
 
 <cfmodule template="/layouts/main.cfm">
@@ -18,7 +18,7 @@
 		<div class="table-vertical">
 			<!--- output the list of speakers on this page. fields to output in datatable speakerID, firstName, lastName, email, company and button to edit --->
 			<!--- TODO - check to see if there are any speakers in the database --->
-			<cfif 1 EQ 1>
+			<cfif arrayLen( recs) >
 				<table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered datatables">
 					<thead>
 						<tr>
@@ -33,6 +33,24 @@
 
 					<tbody>
 						<!--- TODO - loop through speaker recs and complete the table --->
+						<cfloop array="#recs#" index="i">
+							<tr>
+								<td data-title="ID">#i.getSpeakerID()#</td>
+								<td data-title="First Name">#i.getFirstName()#</td>
+								<td data-title="Last Name">#i.getLastName()#</td>
+								<td data-title="Email">#i.getEmail()#</td>
+								<td data-title="Company">#i.getCompany()#</td>
+								<td data-title="Actions">
+									<div class="row options">
+										<div class="col-lg-4 col-md-6">
+											<a href="./edit.cfm?id=#i.getSpeakerID()#" class="btn btn-sm btn-primary">edit</a>
+										</div>
+									</div>
+								</td>
+							</tr>
+						</cfloop>
+						
+						
 					</tbody>
 				</table>
 			<cfelse>
